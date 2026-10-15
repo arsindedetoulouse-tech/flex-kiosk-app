@@ -1,7 +1,110 @@
 .gradle/
 .idea/
+*.iml
+*.ipr
+*.iws
 build/
 **/build/
-local.properties
-*.iml
+docs/
+scripts/
 
+local.properties
+
+gradle/
+
+# Gradle local configuration
+gradle-local.properties
+
+# Gradle generated/cache files
+.gradle-cache/
+
+# Kotlin/Gradle generated local state
+.kotlin/
+.ksp/
+.ksp-cache/
+
+# Navigation editor
+.navigation/
+
+# IntelliJ output
+out/
+
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+*.kotlin_module
+
+*.avd/
+*.avd.ini
+.avd/
+
+*.jks
+*.keystore
+*.p12
+*.pfx
+
+keystore.properties
+
+.env
+.env.*
+!.env.example
+
+secrets.properties
+secrets.local.properties
+
+# Local configuration
+config/local/
+config/secrets/
+config/*.local.*
+
+google-services.json
+
+# Optional template
+!google-services.example.json
+
+# Crashlytics local properties
+crashlytics-build.properties
+
+*.log
+logs/
+
+# Android test output
+test-results/
+connected-test-results/
+
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+*.tmp
+*.temp
+*.swp
+*.swo
+*.swn
+
+# Editor backups
+*.bak
+*.orig
+
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+.ijwb/
+.bin/
+bin/
+
+# Local developer overrides
+*.local.properties
+*.local.yaml
+*.local.yml
+*.local.json
+
+# Local machine configuration
+machine.properties
+developer.properties
+local.config
