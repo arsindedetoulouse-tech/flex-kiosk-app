@@ -3,6 +3,7 @@ package com.arsinde.flexkioskapp.data.home
 import com.arsinde.flexkioskapp.domain.home.HomeModel
 import com.arsinde.flexkioskapp.domain.home.HomeRepository
 import com.arsinde.flexkioskapp.domain.home.HomeUseCase
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -39,6 +40,18 @@ class HomeRepositoryTest {
         )
 
         assertThrows<IllegalStateException> { repository.load() }
+    }
+
+    @Test
+    fun `repository rethrows cancellation instead of falling back to cached data`() = runTest {
+        val repository = HomeRepositoryImpl(
+            FakeDataSource(
+                remote = { throw CancellationException("cancelled") },
+                local = { HomeModel(id = "cached") },
+            ),
+        )
+
+        assertThrows<CancellationException> { repository.load() }
     }
 
     @Test

@@ -1,10 +1,10 @@
 package com.arsinde.flexkioskapp.data.home
 
-import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.arsinde.flexkioskapp.data.asset.AssetSource
 import com.arsinde.flexkioskapp.domain.home.HomeModel
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.json.Json
@@ -25,7 +25,7 @@ import kotlinx.serialization.json.JsonPrimitive
  */
 class HomeDataSourceImpl(
     private val dataStore: DataStore<Preferences>,
-    private val context: Context,
+    private val assetSource: AssetSource,
 ) : HomeDataSource {
     private val json = Json { ignoreUnknownKeys = true }
 
@@ -33,7 +33,7 @@ class HomeDataSourceImpl(
         dataStore.data.first()[MODEL_ID]?.let(::HomeModel)
 
     override suspend fun loadRemote(): HomeModel {
-        val response = context.assets.open(STUB_ASSET).bufferedReader().use { it.readText() }
+        val response = assetSource.readAsset(STUB_ASSET)
         return HomeModel(id = extractId(json.parseToJsonElement(response)))
     }
 
