@@ -37,7 +37,7 @@ The implementation MUST provide the behavior described by this requirement, expo
 
 - GIVEN a valid HOME component belongs to an installed and approved package
 - WHEN the policy is applied
-- THEN the DPC MUST configure the persistent preferred HOME activity using supported APIs
+- THEN the device-policy layer MUST configure the persistent preferred HOME activity using supported APIs
 - AND report failure if the component cannot be configured.
 
 #### Scenario: Package is not installed
