@@ -2,7 +2,9 @@
 
 ## Project overview
 
-AppScanner is a multi-module Android application written in Kotlin.
+Flex Kiosk App is a multi-module Android application written in Kotlin. It targets managed Android
+devices and, among its capabilities, includes a custom Device Policy Controller (DPC) used to
+configure and run the device as a kiosk.
 
 Main technologies:
 
@@ -13,7 +15,7 @@ Main technologies:
 - Koin
 - Ktor
 - Kotlin Serialization
-- Firebase
+- Navigation 3
 - Gradle Kotlin DSL
 - Gradle convention plugins in `build-logic`
 
@@ -21,7 +23,8 @@ The application supports Russian and Uzbek locales.
 
 ## Repository structure
 
-- `app/` — application entry point, app-level DI, navigation and Firebase setup.
+- `app/` — application entry point and app-level DI wiring (`App.kt`, `MainActivity.kt`).
+- `app/navigation/` — start route and top-level route declarations.
 - `core/` — reusable technical modules:
   - `core:network`
   - `core:datastore`
@@ -34,10 +37,14 @@ The application supports Russian and Uzbek locales.
   - `common:testing`
 - `feature/` — product features.
 - `feature/*-api/` — public contracts and API models used to decouple features.
-- `build-logic/` — project convention plugins and shared Gradle configuration.
-- `tools/` — auxiliary scripts for string/resource processing.
+- `build-logic/` — Gradle convention plugins and shared Gradle configuration.
+- `openspec/` — spec-driven change definitions: `proposal.md`, `design.md`, `tasks.md` and delta specs.
 - `SECURITY.md` — security guidelines and policies.
+- `AGENTS.md` — this contract.
 - `CHANGELOG.md` — unreleased changes and recent implementation notes.
+
+Note: `docs/` is ignored by `.gitignore` and holds local scratch material only. Do not rely on it
+as a source of tracked project documentation.
 
 ## General rules
 
@@ -271,12 +278,11 @@ Koin is used for:
 - ViewModels;
 - infrastructure dependencies.
 
-Follow `DEPENDENCY_INJECTION.md`.
 Keep module definitions close to the module they configure.
-Register new feature modules in the application Koin setup in:
+Register new Koin modules in the application Koin setup in:
 
 ```text
-app/.../PbApplication.kt
+app/src/main/kotlin/com/arsinde/flexkioskapp/App.kt
 ```
 Do not create global DI definitions for objects whose lifetime belongs to a Compose screen, navigation destination or another short-lived UI scope unless the existing project architecture explicitly requires it.
 

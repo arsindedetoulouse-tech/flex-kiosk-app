@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the mandatory security policy for the AppScanner Android project.
+This document defines the mandatory security policy for the Flex Kiosk App Android project.
 
 It is part of the project engineering contract and applies to developers, reviewers, automation, and AI agents.
 
