@@ -28,5 +28,5 @@ val homeModule = module {
     single<HomeDataSource> { HomeDataSourceImpl(get(), get()) }
     single<HomeRepository> { HomeRepositoryImpl(get()) }
     single { HomeUseCase(get()) }
-    viewModel { HomeViewModel(get()) }
+    viewModel { HomeViewModel(get(), get()) }
 }

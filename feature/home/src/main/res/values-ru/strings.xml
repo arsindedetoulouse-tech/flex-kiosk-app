@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_title">Добро пожаловать</string>
+    <string name="feature_home_refresh">Обновить</string>
+    <string name="feature_home_error">Не удалось загрузить данные.</string>
+    <string name="feature_home_hint">Значение ниже получено из встроенной тестовой заглушки. Потяните вниз или нажмите «Обновить».</string>
+    <string name="feature_home_provisioning_title">Администрирование устройства</string>
+    <string name="feature_home_provisioning_device_owner">Устройство управляется: оно подготовлено как Device Owner, поэтому политики киоска могут применяться.</string>
+    <string name="feature_home_provisioning_not_provisioned">Устройство не управляется: оно ещё не подготовлено как Device Owner.</string>
+    <string name="feature_home_provisioning_unavailable">Статус администрирования недоступен: сейчас его не удаётся определить.</string>
+</resources>

@@ -12,6 +12,7 @@ dependencies {
     api(project(":common:domain"))
     api(project(":common:presentation"))
     api(project(":core:navigation"))
+    api(project(":core:devicepolicy"))
     implementation(project(":core:designsystem"))
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.koin.compose)

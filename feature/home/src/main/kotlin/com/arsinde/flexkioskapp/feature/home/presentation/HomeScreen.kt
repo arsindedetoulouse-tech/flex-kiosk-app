@@ -77,6 +77,8 @@ fun HomeScreen(
             textAlign = TextAlign.Center,
         )
 
+        ProvisioningStatusCard(status = state.provisioning)
+
         TextButton(
             onClick = onRefresh,
             enabled = !state.isLoading,

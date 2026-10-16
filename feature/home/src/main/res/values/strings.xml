@@ -6,4 +6,10 @@
     <string name="feature_home_refresh">Refresh</string>
     <string name="feature_home_error">Could not load the data.</string>
     <string name="feature_home_hint">The value below comes from the shipped data stub. Pull to refresh or press Refresh.</string>
+    <!-- Device-management status card. The unavailable wording explains the state without exposing
+         the failure that caused it; the cause never leaves core:devicepolicy. -->
+    <string name="feature_home_provisioning_title">Device management</string>
+    <string name="feature_home_provisioning_device_owner">Managed: this device is provisioned as Device Owner, so kiosk policies can be applied.</string>
+    <string name="feature_home_provisioning_not_provisioned">Not managed: this device is not provisioned as Device Owner yet.</string>
+    <string name="feature_home_provisioning_unavailable">Device-management status is unavailable. It cannot be determined right now.</string>
 </resources>

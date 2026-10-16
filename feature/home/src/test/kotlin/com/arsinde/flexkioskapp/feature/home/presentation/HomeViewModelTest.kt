@@ -1,5 +1,7 @@
 package com.arsinde.flexkioskapp.feature.home.presentation
 
+import com.arsinde.flexkioskapp.core.devicepolicy.DeviceOwnerStatus
+import com.arsinde.flexkioskapp.core.devicepolicy.DeviceOwnerStatusProvider
 import com.arsinde.flexkioskapp.domain.home.HomeModel
 import com.arsinde.flexkioskapp.domain.home.HomeRepository
 import com.arsinde.flexkioskapp.domain.home.HomeUseCase
@@ -8,10 +10,17 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.orbitmvi.orbit.test.testWithInternalState
 
-private class FakeRepository(
+internal class FakeRepository(
     private val result: () -> HomeModel?,
 ) : HomeRepository {
     override suspend fun load(): HomeModel? = result()
+}
+
+/** Status provider standing in for the device-management read in ViewModel tests. */
+internal class FakeStatusProvider(
+    private val status: DeviceOwnerStatus = DeviceOwnerStatus.NotProvisioned,
+) : DeviceOwnerStatusProvider {
+    override fun getStatus(): DeviceOwnerStatus = status
 }
 
 class HomeViewModelTest {
@@ -22,12 +31,19 @@ class HomeViewModelTest {
 
         HomeViewModel(
             HomeUseCase(repository),
+            FakeStatusProvider(),
         ).testWithInternalState(this) {
             containerHost.onRefresh()
 
-            expectInternalState { copy(isLoading = true) }
             expectInternalState {
-                copy(isLoading = false, model = HomeModel(id = "42"))
+                copy(isLoading = true, provisioning = ProvisioningStatus.NotProvisioned)
+            }
+            expectInternalState {
+                copy(
+                    isLoading = false,
+                    model = HomeModel(id = "42"),
+                    provisioning = ProvisioningStatus.NotProvisioned,
+                )
             }
         }
     }
@@ -38,11 +54,20 @@ class HomeViewModelTest {
 
         HomeViewModel(
             HomeUseCase(repository),
+            FakeStatusProvider(),
         ).testWithInternalState(this) {
             containerHost.onRefresh()
 
-            expectInternalState { copy(isLoading = true) }
-            expectInternalState { copy(isLoading = false, error = HomeError.Unknown) }
+            expectInternalState {
+                copy(isLoading = true, provisioning = ProvisioningStatus.NotProvisioned)
+            }
+            expectInternalState {
+                copy(
+                    isLoading = false,
+                    error = HomeError.Unknown,
+                    provisioning = ProvisioningStatus.NotProvisioned,
+                )
+            }
         }
     }
 
@@ -52,11 +77,20 @@ class HomeViewModelTest {
 
         HomeViewModel(
             HomeUseCase(repository),
+            FakeStatusProvider(),
         ).testWithInternalState(this) {
             containerHost.onRefresh()
 
-            expectInternalState { copy(isLoading = true) }
-            expectInternalState { copy(isLoading = false, error = HomeError.Network) }
+            expectInternalState {
+                copy(isLoading = true, provisioning = ProvisioningStatus.NotProvisioned)
+            }
+            expectInternalState {
+                copy(
+                    isLoading = false,
+                    error = HomeError.Network,
+                    provisioning = ProvisioningStatus.NotProvisioned,
+                )
+            }
         }
     }
 
@@ -66,11 +100,16 @@ class HomeViewModelTest {
 
         HomeViewModel(
             HomeUseCase(repository),
+            FakeStatusProvider(),
         ).testWithInternalState(this) {
             containerHost.onRefresh()
 
-            expectInternalState { copy(isLoading = true) }
-            expectInternalState { copy(isLoading = false) }
+            expectInternalState {
+                copy(isLoading = true, provisioning = ProvisioningStatus.NotProvisioned)
+            }
+            expectInternalState {
+                copy(isLoading = false, provisioning = ProvisioningStatus.NotProvisioned)
+            }
         }
     }
 
@@ -84,21 +123,40 @@ class HomeViewModelTest {
 
         HomeViewModel(
             HomeUseCase(repository),
+            FakeStatusProvider(),
         ).testWithInternalState(this) {
             containerHost.onRefresh()
 
-            expectInternalState { copy(isLoading = true) }
-            expectInternalState { copy(isLoading = false, error = HomeError.Unknown) }
+            expectInternalState {
+                copy(
+                    isLoading = true,
+                    provisioning = ProvisioningStatus.NotProvisioned,
+                )
+            }
+            expectInternalState {
+                copy(
+                    isLoading = false,
+                    error = HomeError.Unknown,
+                    provisioning = ProvisioningStatus.NotProvisioned,
+                )
+            }
 
             failing = false
             containerHost.onRefresh()
 
-            expectInternalState { copy(isLoading = true, error = null) }
+            expectInternalState {
+                copy(
+                    isLoading = true,
+                    error = null,
+                    provisioning = ProvisioningStatus.NotProvisioned,
+                )
+            }
             expectInternalState {
                 copy(
                     isLoading = false,
                     model = HomeModel(id = "42"),
                     error = null,
+                    provisioning = ProvisioningStatus.NotProvisioned,
                 )
             }
         }

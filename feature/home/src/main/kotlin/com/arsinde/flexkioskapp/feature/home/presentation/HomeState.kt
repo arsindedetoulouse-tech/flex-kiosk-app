@@ -6,6 +6,7 @@ data class HomeState(
     val isLoading: Boolean = false,
     val model: HomeModel? = null,
     val error: HomeError? = null,
+    val provisioning: ProvisioningStatus? = null,
 )
 
 /**
@@ -17,6 +18,19 @@ data class HomeState(
 enum class HomeError {
     Unknown,
     Network,
+}
+
+/**
+ * Device-management state as this screen needs to show it.
+ *
+ * A home-owned enum rather than the platform status model: the platform type is a technical concern
+ * of `core:devicepolicy`, and its failure variant carries the original cause. [Unavailable] is
+ * deliberately payload-free, so a failure cannot reach the UI through the state.
+ */
+enum class ProvisioningStatus {
+    DeviceOwner,
+    NotProvisioned,
+    Unavailable,
 }
 
 sealed interface HomeSideEffect
