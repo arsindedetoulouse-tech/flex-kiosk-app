@@ -7,5 +7,6 @@ dependencies {
     api(libs.junit.platform.launcher)
     api(libs.kotlinx.coroutines.test)
     api(libs.koin.test)
+    api(libs.mockk)
     api(libs.orbit.test)
 }

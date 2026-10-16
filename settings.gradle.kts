@@ -25,6 +25,7 @@ include(
     ":common:presentation",
     ":common:testing",
     ":core:designsystem",
+    ":core:devicepolicy",
     ":core:navigation",
     ":core:datastore",
     ":feature:home",

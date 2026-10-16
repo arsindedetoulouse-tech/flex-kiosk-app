@@ -43,7 +43,7 @@ private fun AppNavDisplay() {
 
     // Every destination comes from a feature. The list must be remembered: the entry provider is
     // keyed on it, so building it inline would rebuild the graph on every recomposition.
-    // `add-feature` prints the line to append here for the feature it just generated.
+    // A new feature adds its own section here.
     val installers = remember {
         buildList<EntryProviderInstaller> {
             add(homeSection)

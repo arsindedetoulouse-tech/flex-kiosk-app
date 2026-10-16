@@ -1,6 +1,20 @@
-# Custom Device Policy Controller
+# add-custom-dpc Specification
 
-## ADDED Requirements
+## Purpose
+
+Defines the Device Policy Controller foundation of the application: the administrative component
+that Android recognizes, and a way to ask whether the installation is actually provisioned as Device
+Owner.
+
+This capability exists because every later kiosk capability depends on knowing that the application
+holds device-owner authority. It covers registration and status detection only; applying policies,
+Lock Task Mode, persistent HOME, startup and remote management belong to the changes that follow it.
+
+Note for implementers: a provisioned installation is a *protected* package on Android. It cannot be
+force-stopped or uninstalled from the shell, so provisioning state is not reversible without a factory
+reset.
+
+## Requirements
 
 ### Requirement: Device administrator component registration
 
@@ -76,6 +90,40 @@ The initial implementation MUST NOT require a backend connection, persistent dat
 - THEN each result MUST reflect the outcome of the relevant status check
 - AND the implementation MUST NOT permanently cache a successful Device Owner state without a defined refresh strategy
 
+### Requirement: Provisioning state is surfaced to the operator
+
+The application MUST display the current provisioning state on its start screen, covering a
+provisioned device, an unprovisioned device, and a status that could not be determined.
+
+When the state could not be determined, the UI MUST explain that the state is unavailable and MUST NOT
+show the failure detail, exception type or message; the raw failure MUST NOT cross the layer boundary
+into presentation state.
+#### Scenario: Provisioned device is reported
+
+- GIVEN the application is provisioned as Device Owner
+- WHEN the start screen is shown
+- THEN the card MUST report that the device is managed as Device Owner
+
+#### Scenario: Unprovisioned device is reported
+
+- GIVEN the application is not provisioned as Device Owner
+- WHEN the start screen is shown
+- THEN the card MUST report that the device is not managed yet
+
+#### Scenario: Undeterminable state is explained without details
+
+- GIVEN the provisioning state cannot be determined because a check fails
+- WHEN the start screen is shown
+- THEN the card MUST state that the device-management status is unavailable
+- AND it MUST NOT display the failure message, exception type or any other failure detail
+
+#### Scenario: Refresh picks up a new provisioning state
+
+- GIVEN the start screen was shown while the application was not provisioned
+- AND the application is provisioned while the start screen remains open
+- WHEN the operator refreshes the screen
+- THEN the card MUST report the new provisioned state
+
 ### Requirement: Development provisioning procedure
 
 The project MUST document how to provision the application as Device Owner on a compatible development device using ADB.
@@ -97,7 +145,7 @@ The procedure MUST state the prerequisites and MUST NOT imply that Device Owner 
 - THEN the failure MUST be documented
 - AND the application MUST NOT report successful Device Owner provisioning without verification
 
-### Requirement: Testability of the DPC foundation
+### Requirement: Testability of the device-policy layer
 
 The Device Owner status interpretation MUST be unit testable without requiring a physical Android device.
 
@@ -118,18 +166,10 @@ This change MUST introduce only the administrative foundation and provisioning-s
 
 It MUST NOT configure Lock Task Mode, modify persistent HOME activity resolution, apply kiosk-specific user restrictions, or change the system UI.
 
-#### Scenario: DPC is installed but kiosk policies are not implemented
+#### Scenario: The application is installed but kiosk policies are not implemented
 
 - GIVEN the application is installed and may be provisioned as Device Owner
-- WHEN the DPC foundation initializes
+- WHEN the device-policy layer initializes
 - THEN it MUST NOT automatically activate Lock Task Mode
 - AND it MUST NOT apply kiosk-specific system restrictions
 - AND the existing Home Screen behavior MUST remain unchanged
-
-## Implementation constraints
-
-- Minimum Android API level: 26.
-- Language: Kotlin.
-- Existing application architecture and dependency-injection conventions MUST be preserved.
-- No third-party EMM dependency.
-- No backend or remote-command implementation in this change.

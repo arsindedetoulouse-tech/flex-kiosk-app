@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="device_admin_label">Администрирование устройства</string>
+    <string name="device_admin_description">Позволяет приложению управлять настройками киоска на этом устройстве. Настройки не изменяются, пока устройство не будет подготовлено как Device Owner.</string>
+</resources>

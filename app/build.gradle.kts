@@ -10,6 +10,7 @@ dependencies {
     implementation(project(":feature:home"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:datastore"))
+    implementation(project(":core:devicepolicy"))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.koin.compose)

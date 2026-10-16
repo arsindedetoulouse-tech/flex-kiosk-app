@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="device_admin_label">Qurilmani boshqarish</string>
+    <string name="device_admin_description">Ilovaning ushbu qurilmada kiosk sozlamalarini boshqarishiga imkon beradi. Qurilma Device Owner sifatida tayyorlanmaguncha sozlamalar o\'zgartirilmaydi.</string>
+</resources>

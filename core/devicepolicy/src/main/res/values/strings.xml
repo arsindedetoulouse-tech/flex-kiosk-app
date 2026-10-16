@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Shown by Android when the user or the system activates the device administrator. -->
+    <string name="device_admin_label">Device administration</string>
+    <string name="device_admin_description">Allows this app to manage kiosk settings on this device. No settings are changed until the device is provisioned as Device Owner.</string>
+</resources>

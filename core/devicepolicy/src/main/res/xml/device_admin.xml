@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Device administrator metadata.
+
+  This change requests no legacy device-admin policies, so `<uses-policies />` is intentionally
+  empty: a policy requested here must be declared with `<uses-permission>` in the manifest.
+  Device Owner status is queried separately through DevicePolicyManager.
+-->
+<device-admin xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-policies />
+</device-admin>
